@@ -36,6 +36,8 @@ There is currently support for the following device types within Home Assistant:
 - [Cover](#cover)
 - [Climate](#climate)
 - [Valve](#valve)
+- [DateTime](#datetime)
+- [Select](#select)
 
 ## Configuration
 
@@ -143,7 +145,7 @@ name:
 
 ## Sensor
 
-The `ads` sensor platform allows reading the value of a numeric variable on your ADS device. The variable can be of type *BOOL*, *BYTE*, *INT*, *UINT*, *SINT*, *USINT*, *DINT*, *UDINT*, *WORD*, *DWORD*, *REAL* or *LREAL*.
+The `ads` sensor platform allows reading the value of a numeric variable on your ADS device. The variable can be of type *BOOL*, *BYTE*, *INT*, *UINT*, *SINT*, *USINT*, *DINT*, *UDINT*, *WORD*, *DWORD*, *REAL*, *LREAL* or *DATE_AND_TIME*.
 
 To use your ADS device, you first have to set up your [ADS hub](#configuration) and then add the following to your {% term "`configuration.yaml`" %}
 file:
@@ -164,7 +166,7 @@ adsvar:
   type: string
 adstype:
   required: false
-  description: The datatype of the ADS variable, possible values are bool, byte, int, uint, sint, usint, dint, udint, word, dword, real, lreal.
+  description: The datatype of the ADS variable, possible values are bool, byte, int, uint, sint, usint, dint, udint, word, dword, real, lreal, date_and_time.
   default: int
   type: string
 name:
@@ -272,7 +274,8 @@ climate:
     name: Living Room Climate
     adsvar_actual_temperature: Thermostat.ActualTemperature
     adsvar_set_temperature: Thermostat.SetpointTemperature
-    adsvar_mode: Thermostat.HeatingMode
+    adsvar_mode: Thermostat.eHvacMode
+    adsvar_action: Thermostat.eHvacAction
     adsvar_preset: Thermostat.Preset
 ```
 
@@ -287,7 +290,11 @@ adsvar_set_temperature:
   type: string
 adsvar_mode:
   required: false
-  description: The name of the variable that sets the new climate mode, use an ENUM or INT variable on the PLC side
+  description: The name of the variable that sets the new climate mode. Use an ENUM or INT variable on the PLC side
+  type: string
+adsvar_action:
+  required: false
+  description: The name of the variable that reads the climate action. Use an ENUM or INT variable on the PLC side
   type: string
 adsvar_preset:
   required: false
@@ -310,13 +317,74 @@ file:
 # Example configuration.yaml entry
 valve:
   - platform: ads
-    adsvar: .global_bool
+    adsvar: MAIN.bValveControl
 ```
 
 {% configuration %}
 adsvar:
   required: true
   description: The name of the variable which you want to access on the ADS device.
+  type: string
+name:
+  required: false
+  description: An identifier for the valve in the frontend.
+  type: string
+{% endconfiguration %}
+
+## DateTime
+
+The `ads` DateTime platform accesses a DATE_AND_TIME variable on the connected ADS device. The variable is identified by its name.
+
+To use your ADS device, you first have to set up your [ADS hub](#configuration) and then add the following to your {% term "`configuration.yaml`" %}
+file:
+
+```yaml
+# Example configuration.yaml entry
+datetime:
+  - platform: ads
+    adsvar: MAIN.dtNextNewYear
+```
+
+{% configuration %}
+adsvar:
+  required: true
+  description: The name of the variable which you want to access on the ADS device.
+  type: string
+name:
+  required: false
+  description: An identifier for the entity in the frontend.
+  type: string
+{% endconfiguration %}
+
+## Select
+
+The `ads` select platform accesses an ENUM (int) variable on the connected ADS device. The variable is identified by its name. You have to set up a corresponding ENUM in the TwinCAT PLC code.
+
+To use your ADS device, you first have to set up your [ADS hub](#configuration) and then add the following to your {% term "`configuration.yaml`" %}
+file:
+
+```yaml
+# Example configuration.yaml entry
+select:
+  - platform: ads
+    adsvar: MAIN.eMyEnum
+    adsvar_options:
+      - "Off"
+      - "Setup"
+      - "Automatic"
+      - "Manual"
+      - "Guest"
+      - "Error"
+```
+
+{% configuration %}
+adsvar:
+  required: true
+  description: The name of the variable which you want to access on the ADS device.
+  type: string
+adsvar_options:
+  required: false
+  description: The available options to select from.
   type: string
 name:
   required: false
