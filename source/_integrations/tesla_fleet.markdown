@@ -17,6 +17,7 @@ ha_platforms:
   - device_tracker
   - diagnostics
   - sensor
+ha_quality_scale: gold
 ha_integration_type: integration
 ---
 
@@ -24,7 +25,7 @@ The Tesla Fleet API {% term integration %} exposes various sensors from Tesla ve
 
 ## Prerequisites
 
-You must have a [Tesla](https://tesla.com) account and a Tesla vehicle, PowerWall, Solar, or Wall Connector.
+You must have a [Tesla](https://tesla.com) account and a Tesla vehicle, PowerWall, Solar, or Wall Connector, and must not have disabled the [My Home Assistant](/integrations/my/) integration.
 
 {% details "Use a custom OAuth application" %}
 
