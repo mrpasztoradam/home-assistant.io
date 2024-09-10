@@ -94,7 +94,7 @@ file:
 # Example configuration.yaml entry
 binary_sensor:
   - platform: ads
-    adsvar: .boolean1
+    adsvar: GVL.boolean1
 ```
 
 {% configuration %}
