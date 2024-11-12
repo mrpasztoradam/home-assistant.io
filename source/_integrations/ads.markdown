@@ -11,6 +11,7 @@ ha_category:
   - Valve
 ha_release: '0.60'
 ha_iot_class: Local Push
+ha_config_flow: true
 ha_domain: ads
 ha_platforms:
   - binary_sensor
@@ -40,8 +41,10 @@ There is currently support for the following device types within Home Assistant:
 - [Select](#select)
 - [Valve](#valve)
 
+{% include integrations/config_flow.md %}
+
 <!-- omit in toc -->
-## Configuration
+## Configuration by YAML
 
 To enable ADS, add the following lines to your {% term "`configuration.yaml`" %} file.
 {% include integrations/restart_ha_after_config_inclusion.md %}
