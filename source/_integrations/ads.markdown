@@ -168,14 +168,14 @@ The `ads` switch platform accesses a boolean variable on the connected ADS devic
 ### Adding a switch in the UI
 
 1. Go to {% my integrations title="**Settings** > **Devices & services**" %} and select the **ADS** {% term integration %}.
-2. Select **Add switch**.
-3. Enter a name for the switch and the full name of the PLC variable, for example, `GVL.bPump`.
+2. Select **Add device**, then **Switch**.
+3. Enter a name for the device and the full name of the PLC variable, for example, `GVL.bPump`.
 
-Home Assistant checks the variable on the PLC. A variable of another type, such as *INT*, is refused. Each switch gets its own {% term device %}, connected through the device of the PLC. To change the name or the variable later, select the three dots {% icon "mdi:dots-vertical" %} menu of the switch on the integration page and select **Reconfigure**.
+Home Assistant checks the variable on the PLC. A variable of another type, such as *INT*, is refused. Each device added this way appears under the device of the PLC runtime. To change the name or the variable later, select the three dots {% icon "mdi:dots-vertical" %} menu of the device on the integration page and select **Reconfigure**.
 
-If the variable cannot be checked, for example because the PLC is not reachable or does not have the variable yet, you can save the switch anyway. Such a switch stays unavailable until the PLC has the variable and the ADS {% term integration %} is reloaded or Home Assistant is restarted.
+If the variable cannot be checked, for example because the PLC is not reachable or does not have the variable yet, you can save the device anyway. Its switch stays unavailable until the PLC has the variable and the ADS {% term integration %} is reloaded or Home Assistant is restarted.
 
-Each switch added in the UI is listed on the integration page. For many variables, use the YAML configuration below instead.
+Each device added in the UI is listed on the integration page. For many variables, use the YAML configuration below instead.
 
 ### Configuring a switch in YAML
 
